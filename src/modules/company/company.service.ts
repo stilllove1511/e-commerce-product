@@ -12,4 +12,10 @@ export class CompanyService {
     async getCompany(id:string) {
         return this.companyRepository.findOneBy({id})
     }
+    async createCompany(data) {
+        return this.companyRepository.insert(data)
+    }
+    async updateCompany(data) {
+        return this.companyRepository.save(data)
+    }
 }
