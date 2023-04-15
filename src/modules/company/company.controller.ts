@@ -7,6 +7,12 @@ export class CompanyController {
   constructor(
     private readonly companyService:CompanyService 
   ){}
+
+  @MessagePattern('get_all_company')
+  getAllCompany() {
+    return this.companyService.getAllCompany();
+  }
+
   @MessagePattern('get_company')
   getCompany(id:string) {
     return this.companyService.getCompany(id);
@@ -20,5 +26,10 @@ export class CompanyController {
   @MessagePattern('update_company')
   updateCompany(data) {
     return this.companyService.updateCompany(data);
+  }
+
+  @MessagePattern('delete_company')
+  deleteCompany(id:string) {
+    return this.companyService.deleteCompany(id);
   }
 }

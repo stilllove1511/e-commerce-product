@@ -2,6 +2,7 @@ import {
   Column,
   Entity,
   PrimaryGeneratedColumn,
+  DeleteDateColumn
 } from 'typeorm';
 @Entity({ name: 'companies' })
 export class CompanyEntity {
@@ -10,4 +11,7 @@ export class CompanyEntity {
 
   @Column({ unique: true, length: 30, type: 'varchar' })
   uniqueName: string;
+
+  @DeleteDateColumn()
+  deletedAt?: Date;
 }

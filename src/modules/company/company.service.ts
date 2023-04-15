@@ -9,6 +9,9 @@ export class CompanyService {
         @InjectRepository(CompanyEntity) private readonly companyRepository: Repository<CompanyEntity>
     ){}
 
+    async getAllCompany() {
+        return this.companyRepository.find()
+    }
     async getCompany(id:string) {
         return this.companyRepository.findOneBy({id})
     }
@@ -17,5 +20,8 @@ export class CompanyService {
     }
     async updateCompany(data) {
         return this.companyRepository.save(data)
+    }
+    async deleteCompany(id:string) {
+        return this.companyRepository.softDelete(id)
     }
 }
