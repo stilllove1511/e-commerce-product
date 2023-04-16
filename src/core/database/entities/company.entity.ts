@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 import { NullableColumn } from '@src/utils/decorators/entities.decorator';
 @Entity({ name: 'companies' })
-export class CompanyEntity {
+export class Company {
     @PrimaryGeneratedColumn('uuid', { name: 'id' })
     id: string;
 
