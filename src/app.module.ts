@@ -6,8 +6,8 @@ import { ConfigModule } from '@nestjs/config';
 import { CompanyModule } from './modules/company/company.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), ORMModule, CompanyModule],
-  controllers: [AppController],
-  providers: [AppService],
+    imports: [ConfigModule.forRoot(), ORMModule, CompanyModule],
+    controllers: [AppController],
+    providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

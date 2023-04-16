@@ -25,6 +25,9 @@ export class CompanyEntity {
     uniqueName: string;
 
     @NullableColumn()
+    title: string;
+
+    @NullableColumn()
     registrationNumber: string;
 
     @NullableColumn({ type: 'text' })

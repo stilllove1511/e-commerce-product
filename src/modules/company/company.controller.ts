@@ -1,35 +1,57 @@
-import { Controller } from '@nestjs/common';
+import { Controller, UseFilters } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { CompanyService } from './company.service';
-
+import { CompanyResponse } from './company.response';
 @Controller()
 export class CompanyController {
-  constructor(
-    private readonly companyService:CompanyService 
-  ){}
+    constructor(
+        private readonly companyService: CompanyService,
+        private readonly companyResponse: CompanyResponse,
+    ) {}
 
-  @MessagePattern('get_all_company')
-  getAllCompany() {
-    return this.companyService.getAllCompany();
-  }
+    @MessagePattern('list_all_company')
+    getAllCompany() {
+        return this.companyService.getAllCompany();
+    }
 
-  @MessagePattern('get_company')
-  getCompany(id:string) {
-    return this.companyService.getCompany(id);
-  }
+    @MessagePattern('get_company')
+    async getCompany(id: string) {
+        const data = await this.companyService.getCompany(id);
+        if (data)
+            return {
+                status: 200,
+                data,
+            };
+        else return this.companyResponse.notExist;
+    }
 
-  @MessagePattern('create_company')
-  createCompany(data) {
-    return this.companyService.createCompany(data);
-  }
+    @MessagePattern('create_company')
+    async createCompany(params) {
+        const data = await this.companyService.createCompany(params);
+        return {
+            code: 200,
+            message: 'ok',
+            data,
+        };
+    }
 
-  @MessagePattern('update_company')
-  updateCompany(data) {
-    return this.companyService.updateCompany(data);
-  }
+    @MessagePattern('update_company')
+    async updateCompany(params) {
+        const data = await this.companyService.updateCompany(params);
+        return {
+            code: 200,
+            message: 'ok',
+            data,
+        };
+    }
 
-  @MessagePattern('delete_company')
-  deleteCompany(id:string) {
-    return this.companyService.deleteCompany(id);
-  }
+    @MessagePattern('delete_company')
+    async deleteCompany(id: string) {
+        const data = this.companyService.deleteCompany(id);
+        return {
+            code: 200,
+            message: 'ok',
+            data,
+        };
+    }
 }
