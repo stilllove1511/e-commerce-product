@@ -27,6 +27,7 @@ export class AreaService {
                 'description',
                 'isRestrictAccess',
             ],
+            relations: ['company'],
             order: {
                 createdAt: 'DESC',
             },

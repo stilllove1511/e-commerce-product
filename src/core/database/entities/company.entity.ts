@@ -471,7 +471,7 @@ export class Company {
     @NullableColumn()
     investorId: string;
 
-    @ManyToMany(() => Area)
+    @ManyToMany(() => Area,(area) => area.company)
     @JoinTable()
     areas: Area[];
 }

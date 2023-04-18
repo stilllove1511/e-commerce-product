@@ -44,4 +44,7 @@ export class Area {
 
     @OneToMany(() => Area, (area) => area.parentCategory)
     childrenCategory: Area[];
+
+    @ManyToMany(() => Company, (compnay) => compnay.areas)
+    company: Company[];
 }
