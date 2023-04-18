@@ -7,471 +7,499 @@ import {
     DeleteDateColumn,
     ManyToMany,
     JoinTable,
-} from 'typeorm';
-import { NullableColumn } from '@src/utils/decorators/entities.decorator';
-import { Area } from './area.entity';
+    OneToOne,
+    JoinColumn,
+    OneToMany,
+} from 'typeorm'
+import { NullableColumn } from '@src/utils/decorators/entities.decorator'
+import { Area } from './area.entity'
+import { Industry } from './industry.entity'
+import { Investor } from './investor.entity'
+import { Person } from './person.entity'
+import { Round } from './round.entity'
+import { Shareholder } from './shareholder.entity'
 @Entity({ name: 'companies' })
 export class Company {
     @PrimaryGeneratedColumn('uuid', { name: 'id' })
-    id: string;
+    id: string
 
     @CreateDateColumn()
-    createdAt?: Date;
+    createdAt?: Date
 
     @UpdateDateColumn()
-    updatedAt?: Date;
+    updatedAt?: Date
 
     @DeleteDateColumn()
-    deletedAt?: Date;
+    deletedAt?: Date
 
     @Column({ unique: true })
-    uniqueName: string;
+    uniqueName: string
 
     @NullableColumn()
-    title: string;
+    title: string
 
     @NullableColumn()
-    registrationNumber: string;
+    registrationNumber: string
 
     @NullableColumn({ type: 'text' })
-    category: string;
+    category: string
 
     @NullableColumn({ type: 'text' })
-    overview: string;
+    overview: string
 
     @NullableColumn()
-    hq: string;
+    hq: string
 
     @NullableColumn()
-    operationArea: string;
+    operationArea: string
 
     @NullableColumn({ type: 'text' })
-    ipoPublic: string;
+    ipoPublic: string
 
     @NullableColumn({ type: 'text' })
-    missionVision: string;
+    missionVision: string
 
     @NullableColumn({ type: 'text' })
-    productService: string;
+    productService: string
 
     @NullableColumn({ type: 'text' })
-    marketAnalysis: string;
+    marketAnalysis: string
 
     @NullableColumn({ type: 'text' })
-    primaryCustomer: string;
+    primaryCustomer: string
 
     @NullableColumn({ type: 'text' })
-    factorsOfDifferent: string;
+    factorsOfDifferent: string
 
     @NullableColumn({ type: 'text' })
-    selfNote: string;
+    selfNote: string
 
     @NullableColumn({ type: 'text' })
-    rivalNote: string;
+    rivalNote: string
 
     @NullableColumn({ type: 'int' })
-    totalSale: number;
+    totalSale: number
 
     @NullableColumn()
-    numberOfEmployeesInEnd: string;
-
-    @NullableColumn({ type: 'text' })
-    corporateAcquisition: string;
-
-    @NullableColumn()
-    organizationName: string;
-
-    @NullableColumn()
-    organizationNameURL: string;
-
-    @NullableColumn()
-    industry: string;
-
-    @NullableColumn()
-    headquarterLocation: string;
-
-    @NullableColumn()
-    activelyHiring: boolean;
-
-    @NullableColumn()
-    foundedDate: Date;
-
-    @NullableColumn()
-    foundedDatePrecision: string;
-
-    @NullableColumn()
-    numberOfEmployee: string;
+    numberOfEmployeesInEnd: string
 
     @NullableColumn({ type: 'text' })
-    description: string;
+    corporateAcquisition: string
 
     @NullableColumn()
-    cbRankCompany: string;
+    organizationName: string
 
     @NullableColumn()
-    headquarterRegion: string;
+    organizationNameURL: string
 
     @NullableColumn()
-    diversitySpotlight: string;
+    industry: string
 
     @NullableColumn()
-    estimatedRevenueRange: string;
+    headquarterLocation: string
 
     @NullableColumn()
-    operatingStatus: boolean;
+    activelyHiring: boolean
 
     @NullableColumn()
-    exitDate: Date;
+    foundedDate: Date
 
     @NullableColumn()
-    exitDatePrecision: string;
+    foundedDatePrecision: string
 
     @NullableColumn()
-    closedDate: Date;
-
-    @NullableColumn()
-    closedDatePrecision: string;
-
-    @NullableColumn()
-    companyType: string;
-
-    @NullableColumn()
-    website: string;
-
-    @NullableColumn()
-    twitterUrl: string;
-
-    @NullableColumn()
-    facebookUrl: string;
-
-    @NullableColumn()
-    linkedInUrl: string;
-
-    @NullableColumn()
-    email: string;
-
-    @NullableColumn()
-    phoneNumber: string;
-
-    @NullableColumn()
-    numberOfArticle: number;
-
-    @NullableColumn()
-    hubTag: string;
+    numberOfEmployee: string
 
     @NullableColumn({ type: 'text' })
-    fullDescription: string;
+    description: string
 
     @NullableColumn()
-    investorType: string;
+    cbRankCompany: string
 
     @NullableColumn()
-    investmentStage: string;
+    headquarterRegion: string
 
     @NullableColumn()
-    numberOfPortfolioOrganization: string;
+    diversitySpotlight: string
 
     @NullableColumn()
-    numberOfInvestment: number;
+    estimatedRevenueRange: string
 
     @NullableColumn()
-    numberOfLeadInvestment: number;
+    operatingStatus: boolean
 
     @NullableColumn()
-    numberOfDiversityInvestment: number;
+    exitDate: Date
 
     @NullableColumn()
-    numberOfExit: number;
+    exitDatePrecision: string
 
     @NullableColumn()
-    numberOfExitsIPO: number;
+    closedDate: Date
 
     @NullableColumn()
-    acceleratorProgramType: string;
+    closedDatePrecision: string
 
     @NullableColumn()
-    acceleratorApplicationDeadline: Date;
+    companyType: string
 
     @NullableColumn()
-    acceleratorDuration: number;
+    website: string
 
     @NullableColumn()
-    schoolType: string;
+    twitterUrl: string
 
     @NullableColumn()
-    schoolProgram: string;
+    facebookUrl: string
 
     @NullableColumn()
-    numberOfEnrollment: number;
+    linkedInUrl: string
 
     @NullableColumn()
-    schoolMethod: string;
+    email: string
 
     @NullableColumn()
-    numberOfFoundersAlumni: number;
+    phoneNumber: string
 
     @NullableColumn()
-    numberOfAlumni: number;
+    numberOfArticle: number
 
     @NullableColumn()
-    IndustryGroup: string;
+    hubTag: string
 
+    @NullableColumn({ type: 'text' })
+    fullDescription: string
+
+    @NullableColumn()
+    investorType: string
+
+    @NullableColumn()
+    investmentStage: string
+
+    @NullableColumn()
+    numberOfPortfolioOrganization: string
+
+    @NullableColumn()
+    numberOfInvestment: number
+
+    @NullableColumn()
+    numberOfLeadInvestment: number
+
+    @NullableColumn()
+    numberOfDiversityInvestment: number
+
+    @NullableColumn()
+    numberOfExit: number
+
+    @NullableColumn()
+    numberOfExitsIPO: number
+
+    @NullableColumn()
+    acceleratorProgramType: string
+
+    @NullableColumn()
+    acceleratorApplicationDeadline: Date
+
+    @NullableColumn()
+    acceleratorDuration: number
+
+    @NullableColumn()
+    schoolType: string
+
+    @NullableColumn()
+    schoolProgram: string
+
+    @NullableColumn()
+    numberOfEnrollment: number
+
+    @NullableColumn()
+    schoolMethod: string
+
+    @NullableColumn()
+    numberOfFoundersAlumni: number
+
+    @NullableColumn()
+    numberOfAlumni: number
+
+    @NullableColumn()
+    IndustryGroup: string
+
     @NullableColumn()
-    numberOfFounder: number;
+    numberOfFounder: number
 
     @NullableColumn()
-    founder: string;
+    founder: string
 
     @NullableColumn()
-    numberOfFundingRound: string;
+    numberOfFundingRound: string
 
     @NullableColumn()
-    fundingStatus: string;
+    fundingStatus: string
 
     @NullableColumn()
-    lastFundingDate: string;
+    lastFundingDate: string
 
     @NullableColumn()
-    lastFundingAmount: string;
+    lastFundingAmount: string
 
     @NullableColumn()
-    lastFundingAmountCurrency: string;
+    lastFundingAmountCurrency: string
 
     @NullableColumn()
-    lastFundingAmountCurrencyUsd: string;
+    lastFundingAmountCurrencyUsd: string
 
     @NullableColumn()
-    lastFundingType: string;
+    lastFundingType: string
 
     @NullableColumn()
-    lastEquityFundingAmount: string;
+    lastEquityFundingAmount: string
 
     @NullableColumn()
-    lastEquityFundingAmountCurrency: string;
+    lastEquityFundingAmountCurrency: string
 
     @NullableColumn()
-    lastEquityFundingAmountCurrencyUsd: string;
+    lastEquityFundingAmountCurrencyUsd: string
 
     @NullableColumn()
-    lastEquityFundingType: string;
+    lastEquityFundingType: string
 
     @NullableColumn()
-    totalEquityFundingAmount: string;
+    totalEquityFundingAmount: string
 
     @NullableColumn()
-    totalEquityFundingAmountCurrency: string;
+    totalEquityFundingAmountCurrency: string
 
     @NullableColumn()
-    totalEquityFundingAmountCurrencyUsd: string;
+    totalEquityFundingAmountCurrencyUsd: string
 
     @NullableColumn()
-    totalFundingAmount: string;
+    totalFundingAmount: string
 
     @NullableColumn()
-    totalFundingAmountCurrency: string;
+    totalFundingAmountCurrency: string
 
     @NullableColumn()
-    top5Investor: string;
+    top5Investor: string
 
     @NullableColumn()
-    numberOfLeadInvestor: string;
+    numberOfLeadInvestor: string
 
     @NullableColumn()
-    numberOfInvestor: string;
+    numberOfInvestor: string
 
     @NullableColumn()
-    numberOfAcquisition: string;
+    numberOfAcquisition: string
 
     @NullableColumn()
-    acquisitionStatus: string;
+    acquisitionStatus: string
 
     @NullableColumn()
-    transactionName: string;
+    transactionName: string
 
     @NullableColumn()
-    transactionNameUrl: string;
+    transactionNameUrl: string
 
     @NullableColumn()
-    acquiredBy: string;
+    acquiredBy: string
 
     @NullableColumn()
-    acquiredByUrl: string;
+    acquiredByUrl: string
 
     @NullableColumn()
-    announcedDate: string;
+    announcedDate: string
 
     @NullableColumn()
-    announcedDatePrecision: string;
+    announcedDatePrecision: string
 
     @NullableColumn()
-    price: string;
+    price: string
 
     @NullableColumn()
-    priceCurrency: string;
+    priceCurrency: string
 
     @NullableColumn()
-    priceCurrencyUsd: string;
+    priceCurrencyUsd: string
 
     @NullableColumn()
-    acquisitionType: string;
+    acquisitionType: string
 
     @NullableColumn()
-    acquisitionTerm: string;
+    acquisitionTerm: string
 
     @NullableColumn()
-    ipoStatus: string;
+    ipoStatus: string
 
     @NullableColumn()
-    ipoDate: string;
+    ipoDate: string
 
     @NullableColumn()
-    delistedDate: string;
+    delistedDate: string
 
     @NullableColumn()
-    delistedDatePrecision: string;
+    delistedDatePrecision: string
 
     @NullableColumn()
-    moneyRaisedIpo: string;
+    moneyRaisedIpo: string
 
     @NullableColumn()
-    moneyRaisedIpoCurrency: string;
+    moneyRaisedIpoCurrency: string
 
     @NullableColumn()
-    moneyRaisedIpoCurrencyUsd: string;
+    moneyRaisedIpoCurrencyUsd: string
 
     @NullableColumn()
-    valuationIpo: string;
+    valuationIpo: string
 
     @NullableColumn()
-    valuationIpoCurrency: string;
+    valuationIpoCurrency: string
 
     @NullableColumn()
-    valuationIpoCurrencyUsd: string;
+    valuationIpoCurrencyUsd: string
 
     @NullableColumn()
-    stockSymbol: string;
+    stockSymbol: string
 
     @NullableColumn()
-    stockExchange: string;
+    stockExchange: string
 
     @NullableColumn()
-    lastLeaderShipHiring: string;
+    lastLeaderShipHiring: string
 
     @NullableColumn()
-    lastLayoffMention: string;
+    lastLayoffMention: string
 
     @NullableColumn()
-    numberOfEvent: string;
+    numberOfEvent: string
 
     @NullableColumn()
-    cbRankOrganization: string;
+    cbRankOrganization: string
 
     @NullableColumn()
-    cbRankSchool: string;
+    cbRankSchool: string
 
     @NullableColumn()
-    trendScore7day: string;
+    trendScore7day: string
 
     @NullableColumn()
-    trendScore30day: string;
+    trendScore30day: string
 
     @NullableColumn()
-    trendScore90day: string;
+    trendScore90day: string
 
     @NullableColumn()
-    similarCompany: string;
+    similarCompany: string
 
     @NullableColumn()
-    contactJobDepartment: string;
+    contactJobDepartment: string
 
     @NullableColumn()
-    numberOfContract: string;
+    numberOfContract: string
 
     @NullableColumn()
-    numberOfPrivateContact: string;
+    numberOfPrivateContact: string
 
     @NullableColumn()
-    monthlyVisit: string;
+    monthlyVisit: string
 
     @NullableColumn()
-    averageVisits6month: string;
+    averageVisits6month: string
 
     @NullableColumn()
-    monthlyVisitGrowth: string;
+    monthlyVisitGrowth: string
 
     @NullableColumn()
-    visitDuration: string;
+    visitDuration: string
 
     @NullableColumn()
-    visitDurationGrowth: string;
+    visitDurationGrowth: string
 
     @NullableColumn()
-    pageViewsVisit: string;
+    pageViewsVisit: string
 
     @NullableColumn()
-    pageViewVisitGrowth: string;
+    pageViewVisitGrowth: string
 
     @NullableColumn()
-    bounceRate: string;
+    bounceRate: string
 
     @NullableColumn()
-    bounceRateGrowth: string;
+    bounceRateGrowth: string
 
     @NullableColumn()
-    globalTrafficRank: string;
+    globalTrafficRank: string
 
     @NullableColumn()
-    monthlyRankChange: string;
+    monthlyRankChange: string
 
     @NullableColumn()
-    monthlyRankGrowth: string;
+    monthlyRankGrowth: string
 
     @NullableColumn()
-    activeTechCount: string;
+    activeTechCount: string
 
     @NullableColumn()
-    numberOfApp: string;
+    numberOfApp: string
 
     @NullableColumn()
-    downloadsLast30Day: string;
+    downloadsLast30Day: string
 
     @NullableColumn()
-    totalProductsActive: string;
+    totalProductsActive: string
 
     @NullableColumn()
-    patentsGranted: string;
+    patentsGranted: string
 
     @NullableColumn()
-    trademarksRegistered: string;
+    trademarksRegistered: string
 
     @NullableColumn()
-    mostpopularPatentClass: string;
+    mostpopularPatentClass: string
 
     @NullableColumn()
-    mostPopularTrademarkClass: string;
+    mostPopularTrademarkClass: string
 
     @NullableColumn()
-    itSpend: string;
+    itSpend: string
 
     @NullableColumn()
-    mostRecentValuationRange: string;
+    mostRecentValuationRange: string
 
     @NullableColumn()
-    dateOfMostRecentValuatinon: string;
+    dateOfMostRecentValuatinon: string
 
     @NullableColumn()
-    numberOfPrivateNote: string;
+    numberOfPrivateNote: string
 
     @NullableColumn()
-    tag: string;
+    tag: string
 
     @NullableColumn()
-    image: string;
+    image: string
 
     @NullableColumn()
-    investorId: string;
+    investorId: string
 
-    @ManyToMany(() => Area,(area) => area.company)
+    @ManyToMany(() => Area, (area) => area.company)
     @JoinTable()
-    areas: Area[];
+    areas: Area[]
+
+    @ManyToMany(() => Industry, (industry) => industry.company)
+    @JoinTable()
+    industries: Industry[]
+
+    @ManyToMany(() => Person, (person) => person.company)
+    @JoinTable()
+    people: Person[]
+
+    @OneToOne(() => Investor)
+    @JoinColumn()
+    investor: Investor
+
+    @ManyToMany(() => Round, (round) => round.company)
+    @JoinTable()
+    rounds: Round[]
+
+    @ManyToMany(() => Shareholder, (shareholder) => shareholder.company)
+    @JoinTable()
+    shareholder: Shareholder[]
 }

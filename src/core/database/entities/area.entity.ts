@@ -8,8 +8,7 @@ import {
     OneToMany,
     JoinColumn,
     ManyToMany,
-    JoinTable,
-} from 'typeorm';
+} from 'typeorm'
 import { NullableColumn } from '@src/utils/decorators/entities.decorator';
 import { Company } from './company.entity';
 @Entity({ name: 'areas' })
