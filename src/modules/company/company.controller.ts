@@ -27,12 +27,7 @@ export class CompanyController {
 
     @MessagePattern('create_company')
     async createCompany(params) {
-        const data = await this.companyService.createCompany(params);
-        return {
-            code: 200,
-            message: 'ok',
-            data,
-        };
+        return this.companyService.createCompany(params)
     }
 
     @MessagePattern('update_company')
