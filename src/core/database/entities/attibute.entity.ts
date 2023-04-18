@@ -4,8 +4,10 @@ import {
     CreateDateColumn,
     UpdateDateColumn,
     DeleteDateColumn,
+    ManyToOne,
 } from 'typeorm'
 import { NullableColumn } from '@src/utils/decorators/entities.decorator'
+import { Product } from './product.entity'
 
 @Entity()
 export class Attribute {
@@ -26,4 +28,7 @@ export class Attribute {
 
     @NullableColumn()
     description: string
+
+    @ManyToOne(() => Product)
+    product: Product
 }

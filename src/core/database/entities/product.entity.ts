@@ -7,7 +7,7 @@ import {
     ManyToMany,
     JoinTable,
     ManyToOne,
-    JoinColumn,
+    OneToMany,
 } from 'typeorm'
 import { NullableColumn } from '@src/utils/decorators/entities.decorator'
 import { Attribute } from './attibute.entity'
@@ -34,14 +34,13 @@ export class Product {
     @NullableColumn()
     price: number
 
-    @ManyToMany(() => Attribute)
-    @JoinTable()
+    @OneToMany(() => Attribute, (atttribute) => atttribute.product)
     atttributes: Attribute[]
 
     @ManyToMany(() => Category)
+    @JoinTable({ name: 'product_category' })
     categories: Category[]
 
     @ManyToOne(() => Brand)
-    @JoinColumn()
     brand: Brand
 }
