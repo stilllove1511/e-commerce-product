@@ -1,5 +1,4 @@
 import {
-    Column,
     Entity,
     PrimaryGeneratedColumn,
     CreateDateColumn,
@@ -8,8 +7,11 @@ import {
     ManyToOne,
     OneToMany,
     JoinColumn,
+    ManyToMany,
+    JoinTable,
 } from 'typeorm';
 import { NullableColumn } from '@src/utils/decorators/entities.decorator';
+import { Company } from './company.entity';
 @Entity({ name: 'areas' })
 export class Area {
     @PrimaryGeneratedColumn('uuid', { name: 'id' })

@@ -5,8 +5,11 @@ import {
     CreateDateColumn,
     UpdateDateColumn,
     DeleteDateColumn,
+    ManyToMany,
+    JoinTable,
 } from 'typeorm';
 import { NullableColumn } from '@src/utils/decorators/entities.decorator';
+import { Area } from './area.entity';
 @Entity({ name: 'companies' })
 export class Company {
     @PrimaryGeneratedColumn('uuid', { name: 'id' })
@@ -467,4 +470,8 @@ export class Company {
 
     @NullableColumn()
     investorId: string;
+
+    @ManyToMany(() => Area)
+    @JoinTable()
+    areas: Area[];
 }
