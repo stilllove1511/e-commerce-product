@@ -18,7 +18,7 @@ export class ProductService {
         let result
         await this.attributeRepository.manager.transaction(
             async (transactionalEntityManager) => {
-                if (data.attributes?.length) {
+                if(data.attributes){
                     const attributes = await transactionalEntityManager.save(
                         Attribute,
                         data.attributes,
@@ -62,15 +62,13 @@ export class ProductService {
         if (product) {
             await this.productRepository.manager.transaction(
                 async (transactionalEntityManager) => {
-                    if (data.attributes?.length) {
+                    if (data.attributes) {
                         const attributes =
                             await transactionalEntityManager.save(
                                 Attribute,
                                 data.attributes,
                             )
                         data.attributes = attributes
-                    } else {
-                        data.attributes = []
                     }
                     await transactionalEntityManager.save(Product, data)
                 },
