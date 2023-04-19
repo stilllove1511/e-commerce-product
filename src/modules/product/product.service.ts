@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
+import { Attribute } from '@src/core/database/entities/attibute.entity'
 import { Product } from '@src/core/database/entities/product.entity'
 import { ERROR_CODE } from '@src/utils/enums/error_code.enum'
 import { Repository } from 'typeorm'
@@ -9,10 +10,24 @@ export class ProductService {
     constructor(
         @InjectRepository(Product)
         private readonly productRepository: Repository<Product>,
+        @InjectRepository(Attribute)
+        private readonly attributeRepository: Repository<Attribute>,
     ) {}
 
     async createProduct(data) {
-        const result = await this.productRepository.save(data)
+        let result
+        await this.attributeRepository.manager.transaction(
+            async (transactionalEntityManager) => {
+                if (data.attributes?.length) {
+                    const attributes = await transactionalEntityManager.save(
+                        Attribute,
+                        data.attributes,
+                    )
+                    data.attributes = attributes
+                }
+                result = await transactionalEntityManager.save(Product, data)
+            },
+        )
         return {
             code: ERROR_CODE.SUCCESS,
             data: result,
@@ -45,10 +60,23 @@ export class ProductService {
             id: data.id,
         })
         if (product) {
-            const result = await this.productRepository.save(data)
+            await this.productRepository.manager.transaction(
+                async (transactionalEntityManager) => {
+                    if (data.attributes?.length) {
+                        const attributes =
+                            await transactionalEntityManager.save(
+                                Attribute,
+                                data.attributes,
+                            )
+                        data.attributes = attributes
+                    } else {
+                        data.attributes = []
+                    }
+                    await transactionalEntityManager.save(Product, data)
+                },
+            )
             return {
                 code: ERROR_CODE.SUCCESS,
-                data: result,
             }
         } else {
             return {

@@ -34,8 +34,8 @@ export class Product {
     @NullableColumn()
     price: number
 
-    @OneToMany(() => Attribute, (atttribute) => atttribute.product)
-    atttributes: Attribute[]
+    @OneToMany(() => Attribute, (attribute) => attribute.product)
+    attributes: Attribute[]
 
     @ManyToMany(() => Category)
     @JoinTable({ name: 'product_category' })
