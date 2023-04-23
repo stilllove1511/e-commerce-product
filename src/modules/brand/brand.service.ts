@@ -52,7 +52,7 @@ export class BrandService {
         } else {
             return {
                 code: ERROR_CODE.FAIL,
-                message: 'band is not exist',
+                message: 'brand is not exist',
             }
         }
     }

@@ -4,8 +4,6 @@ import {
     CreateDateColumn,
     UpdateDateColumn,
     DeleteDateColumn,
-    ManyToOne,
-    OneToMany,
     ManyToMany,
     JoinTable,
 } from 'typeorm'
@@ -31,12 +29,6 @@ export class Category {
 
     @NullableColumn()
     description: string
-
-    @ManyToOne(() => Category, (category) => category.children)
-    parent: Category
-
-    @OneToMany(() => Category, (category) => category.parent)
-    children: Category[]
 
     @ManyToMany(() => Product)
     @JoinTable({ name: 'product_category' })
