@@ -9,4 +9,4 @@ import { BrandController } from './brand.controller'
     controllers: [BrandController],
     providers: [BrandService],
 })
-export class BrandtModule {}
+export class BrandModule {}

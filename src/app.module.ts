@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { ORMModule } from './core/database/orm.module';
 import { ConfigModule } from '@nestjs/config';
 import { ProductModule } from './modules/product/product.module'
-import { BrandtModule } from './modules/brand/brand.module'
+import { BrandModule } from './modules/brand/brand.module'
 import { CategorytModule } from './modules/category/category.module'
 
 @Module({
@@ -12,7 +12,7 @@ import { CategorytModule } from './modules/category/category.module'
         ConfigModule.forRoot(),
         ORMModule,
         ProductModule,
-        BrandtModule,
+        BrandModule,
         CategorytModule,
     ],
     controllers: [AppController],
