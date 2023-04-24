@@ -37,12 +37,11 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
         // return decoded;
         try {
             // Giải mã JWT token và trả về dữ liệu giải mã
-            const decoded = jwt.verify(token, 'secretKey') // Thay 'your-secret-key' bằng khóa bí mật thực tế của bạn
+            const decoded = jwt.verify(token, process.env.JWTSECRET) // Thay 'your-secret-key' bằng khóa bí mật thực tế của bạn
             return decoded
         } catch (error) {
             // Nếu JWT token không hợp lệ, ném ra lỗi để xử lý ở lớp trên
             throw new UnauthorizedException('Invalid JWT token')
         }
-        return null // Chỉ là ví dụ, cần thay thế với logic thực tế
     }
 }

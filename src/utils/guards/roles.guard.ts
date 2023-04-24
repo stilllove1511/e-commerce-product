@@ -30,6 +30,11 @@ export class RolesGuard implements CanActivate {
         }
 
         // Kiểm tra vai trò của người dùng có khớp với vai trò yêu cầu hay không
-        return requiredRoles.every((role) => user.role.code === role)
+        for (let role of requiredRoles) {
+            if (user.role.code === role) {
+                return true
+            }
+        }
+        return false
     }
 }
