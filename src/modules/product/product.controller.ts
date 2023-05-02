@@ -6,6 +6,7 @@ import { Roles } from '@src/utils/decorators/role.decorator'
 import { RolesGuard } from '@src/utils/guards/roles.guard'
 import { JwtAuthGuard } from '@src/utils/guards/jwt.guard'
 import { role } from '@src/utils/enums/role.enum'
+import { ERROR_CODE } from '@src/utils/enums/error_code.enum'
 
 @Controller()
 export class ProductController {
@@ -15,14 +16,20 @@ export class ProductController {
     @Roles(role.admin)
     @MessagePattern(PRODUCT_PATTERN.product_create)
     async createProduct(data) {
-        return this.productService.createProduct(data)
+        const product = await this.productService.createProduct(data)
+        return {
+            code: ERROR_CODE.SUCCESS,
+            data: product,
+        }
     }
 
     @MessagePattern(PRODUCT_PATTERN.product_get_all)
     async getAllProduct({ page = 1, size = 10 }) {
-        const take = size
-        const skip = (page - 1) * size
-        return this.productService.getAllProduct({ take, skip })
+        const data = await this.productService.getAllProduct({ page, size })
+        return {
+            code: ERROR_CODE.SUCCESS,
+            data,
+        }
     }
 
     @MessagePattern(PRODUCT_PATTERN.product_get_one)

@@ -11,64 +11,35 @@ export class CategoryService {
         private readonly categoryRepository: Repository<Category>,
     ) {}
 
-    async createCategory(data) {
-        let result = await this.categoryRepository.save(data)
-        return {
-            code: ERROR_CODE.SUCCESS,
-            data: result,
-        }
+    async finOneBy(param) {
+        return this.categoryRepository.findOneBy(param)
     }
 
-    async getAllCategory({ take, skip }) {
-        const result = await this.categoryRepository.findAndCount({
+    async createCategory(data) {
+        return this.categoryRepository.save(data)
+    }
+
+    async getAllCategory({ page, size }) {
+        const take = size
+        const skip = (page - 1) * size
+        const response = await this.categoryRepository.findAndCount({
             take,
             skip,
         })
-        const total = result[1]
-        const data = result[0]
-        return {
-            code: ERROR_CODE.SUCCESS,
-            data: { total, data },
-        }
+        const total = response[1]
+        const data = response[0]
+        return { total, data }
     }
 
     async getCategory(id) {
-        const result = await this.categoryRepository.findOneBy({ id })
-        if (result) {
-            return {
-                code: ERROR_CODE.SUCCESS,
-                data: result,
-            }
-        } else {
-            return {
-                code: ERROR_CODE.FAIL,
-                message: 'category not exist',
-            }
-        }
+        return this.categoryRepository.findOneBy({ id })
     }
 
     async updateCategory(data) {
-        const band = await this.categoryRepository.findOneBy({
-            id: data.id,
-        })
-        if (band) {
-            await this.categoryRepository.save(data)
-            return {
-                code: ERROR_CODE.SUCCESS,
-            }
-        } else {
-            return {
-                code: ERROR_CODE.FAIL,
-                message: 'category is not exist',
-            }
-        }
+        return this.categoryRepository.save(data)
     }
 
     async deleteCategory(id) {
-        const result = await this.categoryRepository.softDelete(id)
-        return {
-            code: ERROR_CODE.SUCCESS,
-            data: result,
-        }
+        return await this.categoryRepository.softDelete(id)
     }
 }

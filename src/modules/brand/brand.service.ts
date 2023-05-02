@@ -11,15 +11,17 @@ export class BrandService {
         private readonly brandRepository: Repository<Brand>,
     ) {}
 
-    async createBrand(data) {
-        let result = await this.brandRepository.save(data)
-        return {
-            code: ERROR_CODE.SUCCESS,
-            data: result,
-        }
+    async findOneBy(param) {
+        return this.brandRepository.findOneBy(param)
     }
 
-    async getAllBrand({ take, skip }) {
+    async createBrand(data) {
+        return this.brandRepository.save(data)
+    }
+
+    async getAllBrand({ page, size }) {
+        const take = size
+        const skip = (page - 1) * size
         const result = await this.brandRepository.findAndCount({
             take,
             skip,
@@ -27,41 +29,20 @@ export class BrandService {
         const total = result[1]
         const data = result[0]
         return {
-            code: ERROR_CODE.SUCCESS,
-            data: { total, data },
+            total,
+            data,
         }
     }
 
     async getBrand(id) {
-        const result = await this.brandRepository.findOneBy({ id })
-        return {
-            code: ERROR_CODE.SUCCESS,
-            data: result,
-        }
+        return this.brandRepository.findOneBy({ id })
     }
 
     async updateBrand(data) {
-        const band = await this.brandRepository.findOneBy({
-            id: data.id,
-        })
-        if (band) {
-            await this.brandRepository.save(data)
-            return {
-                code: ERROR_CODE.SUCCESS,
-            }
-        } else {
-            return {
-                code: ERROR_CODE.FAIL,
-                message: 'brand is not exist',
-            }
-        }
+        return this.brandRepository.save(data)
     }
 
     async deleteBrand(id) {
-        const result = await this.brandRepository.softDelete(id)
-        return {
-            code: ERROR_CODE.SUCCESS,
-            data: result,
-        }
+        return this.brandRepository.softDelete(id)
     }
 }

@@ -28,23 +28,19 @@ export class ProductService {
                 result = await transactionalEntityManager.save(Product, data)
             },
         )
-        return {
-            code: ERROR_CODE.SUCCESS,
-            data: result,
-        }
+        return result
     }
 
-    async getAllProduct({ take, skip }) {
+    async getAllProduct({ page, size }) {
+        const take = size
+        const skip = (page - 1) * size
         const result = await this.productRepository.findAndCount({
             take,
             skip,
         })
         const total = result[1]
         const data = result[0]
-        return {
-            code: ERROR_CODE.SUCCESS,
-            data: { total, data },
-        }
+        return { total, data }
     }
 
     async getProduct(id) {
