@@ -6,6 +6,7 @@ import {
     Param,
     Post,
     Put,
+    Query,
     UseGuards,
 } from '@nestjs/common'
 import { ProductService } from './product.service'
@@ -30,8 +31,8 @@ export class ProductController {
         }
     }
 
-    @Post('get-all')
-    async getAllProduct(@Body() { page = 1, size = 10 }) {
+    @Get('get_all')
+    async getAllProduct(@Query('page') page = 1, @Query('size') size = 0) {
         const data = await this.productService.getAllProduct({ page, size })
         return {
             code: ERROR_CODE.SUCCESS,

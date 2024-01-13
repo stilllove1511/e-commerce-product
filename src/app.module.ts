@@ -24,7 +24,7 @@ config()
                 maxRetries: 3,
             },
             service: {
-                name: 'product-service',
+                name: 'product',
                 port: +process.env.PORT,
             },
             clientLogger: {
