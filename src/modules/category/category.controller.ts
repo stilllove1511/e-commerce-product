@@ -1,21 +1,27 @@
-import { Controller, UseGuards } from '@nestjs/common'
+import {
+    Body,
+    Controller,
+    Get,
+    Param,
+    Post,
+    Put,
+    UseGuards,
+} from '@nestjs/common'
 import { CategoryService } from './category.service'
-import { MessagePattern } from '@nestjs/microservices'
-import { CATEGORY_PATTERN } from '@src/utils/enums/category.enum'
-import { Roles } from '@src/utils/decorators/role.decorator'
+import { UseRoles } from '@src/utils/decorators/role.decorator'
 import { role } from '@src/utils/enums/role.enum'
 import { JwtAuthGuard } from '@src/utils/guards/jwt.guard'
 import { RolesGuard } from '@src/utils/guards/roles.guard'
 import { ERROR_CODE } from '@src/utils/enums/error_code.enum'
 
-@Controller()
+@Controller('category')
 export class CategoryController {
     constructor(private readonly categoryService: CategoryService) {}
 
     @UseGuards(JwtAuthGuard, RolesGuard)
-    @Roles(role.admin)
-    @MessagePattern(CATEGORY_PATTERN.category_create)
-    async createCategory(data) {
+    @UseRoles(role.admin)
+    @Post('create')
+    async createCategory(@Body() data) {
         const result = await this.categoryService.createCategory(data)
         return {
             code: ERROR_CODE.SUCCESS,
@@ -23,8 +29,8 @@ export class CategoryController {
         }
     }
 
-    @MessagePattern(CATEGORY_PATTERN.category_get_all)
-    async getAllCategory({ page = 1, size = 10 }) {
+    @Post('get-all')
+    async getAllCategory(@Body() { page = 1, size = 10 }) {
         const data = await this.categoryService.getAllCategory({ page, size })
         return {
             code: ERROR_CODE.SUCCESS,
@@ -32,8 +38,8 @@ export class CategoryController {
         }
     }
 
-    @MessagePattern(CATEGORY_PATTERN.category_get_one)
-    async getCategory(id: string) {
+    @Get('get-one/:id')
+    async getCategory(@Param() id: string) {
         const category = await this.categoryService.getCategory(id)
         if (category) {
             return {
@@ -49,10 +55,10 @@ export class CategoryController {
     }
 
     @UseGuards(JwtAuthGuard, RolesGuard)
-    @Roles(role.admin)
-    @MessagePattern(CATEGORY_PATTERN.category_update)
-    async updateCategory(data) {
-        const category = this.categoryService.finOneBy({id:data.id})
+    @UseRoles(role.admin)
+    @Put('update')
+    async updateCategory(@Body() data) {
+        const category = this.categoryService.finOneBy({ id: data.id })
         if (category) {
             await this.categoryService.updateCategory(data)
             return {
@@ -67,9 +73,9 @@ export class CategoryController {
     }
 
     @UseGuards(JwtAuthGuard, RolesGuard)
-    @Roles(role.admin)
-    @MessagePattern(CATEGORY_PATTERN.category_delete)
-    async deleteCategory(id: string) {
+    @UseRoles(role.admin)
+    @Put('delete/:id')
+    async deleteCategory(@Param() id: string) {
         await this.categoryService.deleteCategory(id)
         return {
             code: ERROR_CODE.SUCCESS,

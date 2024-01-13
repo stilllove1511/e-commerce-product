@@ -10,7 +10,7 @@ import {
     OneToMany,
 } from 'typeorm'
 import { NullableColumn } from '@src/utils/decorators/entities.decorator'
-import { Attribute } from './attibute.entity'
+import { Attribute } from './attribute.entity'
 import { Category } from './category.entity'
 import { Brand } from './brand.entity'
 

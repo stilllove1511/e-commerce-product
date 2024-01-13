@@ -1,21 +1,28 @@
-import { Controller, UseGuards } from '@nestjs/common'
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Post,
+    Put,
+    UseGuards,
+} from '@nestjs/common'
 import { ProductService } from './product.service'
-import { MessagePattern } from '@nestjs/microservices'
-import { PRODUCT_PATTERN } from '@src/utils/enums/product.enum'
-import { Roles } from '@src/utils/decorators/role.decorator'
+import { UseRoles } from '@src/utils/decorators/role.decorator'
 import { RolesGuard } from '@src/utils/guards/roles.guard'
 import { JwtAuthGuard } from '@src/utils/guards/jwt.guard'
 import { role } from '@src/utils/enums/role.enum'
 import { ERROR_CODE } from '@src/utils/enums/error_code.enum'
 
-@Controller()
+@Controller('product')
 export class ProductController {
     constructor(private readonly productService: ProductService) {}
 
     @UseGuards(JwtAuthGuard, RolesGuard)
-    @Roles(role.admin)
-    @MessagePattern(PRODUCT_PATTERN.product_create)
-    async createProduct(data) {
+    @UseRoles(role.admin)
+    @Post('create')
+    async createProduct(@Body() data) {
         const product = await this.productService.createProduct(data)
         return {
             code: ERROR_CODE.SUCCESS,
@@ -23,8 +30,8 @@ export class ProductController {
         }
     }
 
-    @MessagePattern(PRODUCT_PATTERN.product_get_all)
-    async getAllProduct({ page = 1, size = 10 }) {
+    @Post('get-all')
+    async getAllProduct(@Body() { page = 1, size = 10 }) {
         const data = await this.productService.getAllProduct({ page, size })
         return {
             code: ERROR_CODE.SUCCESS,
@@ -32,22 +39,22 @@ export class ProductController {
         }
     }
 
-    @MessagePattern(PRODUCT_PATTERN.product_get_one)
-    async getProduct(id: string) {
+    @Get('get-one/:id')
+    async getProduct(@Param() id: string) {
         return this.productService.getProduct(id)
     }
 
     @UseGuards(JwtAuthGuard, RolesGuard)
-    @Roles(role.admin)
-    @MessagePattern(PRODUCT_PATTERN.product_update)
-    async updateProduct(data) {
+    @UseRoles(role.admin)
+    @Put('update')
+    async updateProduct(@Body() data) {
         return this.productService.updateProduct(data)
     }
 
     @UseGuards(JwtAuthGuard, RolesGuard)
-    @Roles(role.admin)
-    @MessagePattern(PRODUCT_PATTERN.product_delete)
-    async deleteProduct(id: string) {
+    @UseRoles(role.admin)
+    @Delete('delete/:id')
+    async deleteProduct(@Param() id: string) {
         return this.productService.deleteProduct(id)
     }
 }

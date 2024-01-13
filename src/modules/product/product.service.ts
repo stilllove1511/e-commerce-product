@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Attribute } from '@src/core/database/entities/attibute.entity'
+import { Attribute } from '@src/core/database/entities/attribute.entity'
 import { Product } from '@src/core/database/entities/product.entity'
 import { ERROR_CODE } from '@src/utils/enums/error_code.enum'
 import { Repository } from 'typeorm'

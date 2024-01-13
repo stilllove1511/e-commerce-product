@@ -3,7 +3,7 @@ import { ORMModule } from './core/database/orm.module'
 import { ConfigModule } from '@nestjs/config'
 import { ProductModule } from './modules/product/product.module'
 import { BrandModule } from './modules/brand/brand.module'
-import { CategorytModule } from './modules/category/category.module'
+import { CategoryModule } from './modules/category/category.module'
 
 @Module({
     imports: [
@@ -11,7 +11,7 @@ import { CategorytModule } from './modules/category/category.module'
         ORMModule,
         ProductModule,
         BrandModule,
-        CategorytModule,
+        CategoryModule,
     ],
 })
 export class AppModule {}
