@@ -5,6 +5,8 @@ import { ProductModule } from './modules/product/product.module'
 import { BrandModule } from './modules/brand/brand.module'
 import { CategoryModule } from './modules/category/category.module'
 import { EurekaModule } from 'nestjs-eureka'
+import { config } from 'dotenv'
+config()
 
 @Module({
     imports: [
@@ -15,18 +17,23 @@ import { EurekaModule } from 'nestjs-eureka'
         CategoryModule,
         EurekaModule.forRoot({
             eureka: {
-              host: process.env.EUREKA_HOST,
-              port: process.env.EUREKA_PORT,    
-              registryFetchInterval: 1000,
-              servicePath: '/eureka/apps/',
-              maxRetries: 3,
+                host: process.env.EUREKA_HOST,
+                port: process.env.EUREKA_PORT,
+                registryFetchInterval: 1000,
+                servicePath: '/eureka/apps/',
+                maxRetries: 3,
             },
             service: {
-              name: 'my-service',
-              port: 8080,
+                name: 'product-service',
+                port: +process.env.PORT,
+            },
+            clientLogger: {
+                debug: () => false,
+                error: console.log,
+                info: () => false,
+                warn: console.log,
             },
         }),
-        
     ],
 })
 export class AppModule {}
